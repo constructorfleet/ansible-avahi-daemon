@@ -1,0 +1,10 @@
+---
+
+avahi_enable_options:
+  - publish-addresses
+  - publish-domain
+  - enable-reflector
+
+
+avahi_disable_options:
+  - reflect-ipv

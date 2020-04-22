@@ -1,0 +1,6 @@
+---
+
+avahi_packages:
+  - avahi-daemon
+
+avahi_conf_path: /etc/avahi/avahi-daemon.conf

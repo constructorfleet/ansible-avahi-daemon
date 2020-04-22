@@ -1,0 +1,20 @@
+---
+
+- name: Install packages
+  package:
+    name: '{{ avahi_packages }}'
+    state: present
+
+- name: Enable options
+  replace:
+    path: '{{ avahi_conf_path }}'
+    regexp: '^#?{{ item }}=(?:yes|no)$'
+    replace: '{{ item }}=yes'
+  loop: '{{ avahi_enable_options }}'
+
+- name: Disable options
+  replace:
+    path: '{{ avahi_conf_path }}'
+    regexp: '^#?{{ item }}=(?:yes|no)$'
+    replace: '{{ item }}=no'
+  loop: '{{ avahi_disable_options }}'
