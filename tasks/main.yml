@@ -11,6 +11,7 @@
     regexp: '^#?{{ item }}=(?:yes|no)$'
     replace: '{{ item }}=yes'
   loop: '{{ avahi_enable_options }}'
+  register: avahi_options_enabled
 
 - name: Disable options
   replace:
@@ -18,3 +19,10 @@
     regexp: '^#?{{ item }}=(?:yes|no)$'
     replace: '{{ item }}=no'
   loop: '{{ avahi_disable_options }}'
+  register: avahi_options_disabled
+
+- name: Restart avahi-daemon if config changes
+  systemd:
+    name: avahi-daemon
+    state: restarted
+  when: avahi_options_enabled.changed or avahi_options_disabled.changed
