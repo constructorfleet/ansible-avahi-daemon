@@ -12,7 +12,7 @@
     - name: Assert service is running
       ansible.builtin.assert:
         that:
-          - "{{ (service_facts.ansible_facts.services[service].state | default("error")) in ['running', 'started'] | default(False) }}"
+          - "{{ (service_facts.ansible_facts.services[service].state | default('error')) in ['running', 'started'] | default(False) }}"
         success_msg: "Service {{ service }} is running"
         fail_msg: "Service {{ service }} is not running: {{ service_facts | to_nice_yaml }}"
       loop:
