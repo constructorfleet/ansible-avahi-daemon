@@ -8,6 +8,10 @@ platforms:
     dockerfile: Dockerfile.j2
     image: jrei/systemd-ubuntu:focal
     privileged: true
+    tmpfs:
+      - /tmp
+      - /run
+      - /run/lock
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
 provisioner:
