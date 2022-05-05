@@ -16,6 +16,18 @@ platforms:
       - /run/lock
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  - name: centos-8
+    image: joepublic/molecule-centos:8
+    privileged: true
+    command: /usr/sbin/init
+    capabilities:
+      - SYS_ADMIN
+    tmpfs:
+      - /tmp
+      - /run
+      - /run/lock
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
 provisioner:
   name: ansible
   options:
