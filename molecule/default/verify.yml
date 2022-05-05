@@ -8,14 +8,16 @@
       ansible.builtin.service_facts:
       register: service_facts
 
-    - name: Debug
-      ansible.builtin.debug:
-        msg: '{{ service_facts | to_nice_yaml }}'
-
     - name: Assert service is running
       ansible.builtin.assert:
         that:
-          - "{{ service_facts.ansible_facts['avahi-daemon'].state == 'started' }}"
-        success_msg: "Service avahi-daemon is started"
-        fail_msg: "Service avahi-daemon is not started: {{ service_facts | to_nice_yaml }}"
+          - "{{ service_facts.ansible_facts.services[service].state == 'started' | default(False) }}"
+        success_msg: "Service {{ service }}is started"
+        fail_msg: "Service {{ service }} is not started: {{ service_facts | to_nice_yaml }}"
+      loop:
+        - avahi-daemon
+        - avahi-daemon.service
+      loop_control:
+        loop_var: service
+        labe: "{{ service }}"
 
