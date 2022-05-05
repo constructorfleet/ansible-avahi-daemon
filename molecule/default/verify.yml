@@ -11,9 +11,9 @@
     - name: Assert service is running
       ansible.builtin.assert:
         that:
-          - "{{ service_facts.ansible_facts.services[service].state not in ['started', 'running'] | default(False) }}"
-        success_msg: "Service {{ service }}is started"
-        fail_msg: "Service {{ service }} is not started: {{ service_facts | to_nice_yaml }}"
+          - "{{ service_facts.ansible_facts.services[service].state == service_state | default(False) }}"
+        success_msg: "Service {{ service }} is {{ service_state }}"
+        fail_msg: "Service {{ service }} is not {{ service_state }}: {{ service_facts | to_nice_yaml }}"
       loop:
         - avahi-daemon
         - avahi-daemon.service

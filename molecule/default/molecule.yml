@@ -32,6 +32,12 @@ provisioner:
   name: ansible
   options:
     vvv: True
+  inventory:
+    host_vars:
+      ubuntu-20.04:
+        service_state: started
+      centos-7:
+        service_state: running
 #lint: |
 #  set -e
 #  yamllint .
