@@ -16,8 +16,8 @@ platforms:
       - /run/lock
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  - name: centos-8
-    image: joepublic/molecule-centos:8
+  - name: centos-7
+    image: joepublic/molecule-centos:7
     privileged: true
     command: /usr/sbin/init
     capabilities:
