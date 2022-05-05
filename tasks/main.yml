@@ -1,12 +1,21 @@
 ---
 
+- name: Include os specific vars
+  ansible.builtin.include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+  tags:
+    - always
+
 - name: Install packages
-  package:
+  ansible.builtin.package:
     name: '{{ avahi_packages }}'
     state: present
 
 - name: Enable options
-  replace:
+  ansible.builtin.replace:
     path: '{{ avahi_conf_path }}'
     regexp: '^#?{{ item }}=(?:yes|no)$'
     replace: '{{ item }}=yes'
@@ -14,7 +23,7 @@
   register: avahi_options_enabled
 
 - name: Disable options
-  replace:
+  ansible.builtin.replace:
     path: '{{ avahi_conf_path }}'
     regexp: '^#?{{ item }}=(?:yes|no)$'
     replace: '{{ item }}=no'
@@ -22,7 +31,9 @@
   register: avahi_options_disabled
 
 - name: Restart avahi-daemon if config changes
-  systemd:
+  ansible.builtin.systemd:
     name: avahi-daemon
     state: restarted
+    daemon_reload: true
+    enabled: yes
   when: avahi_options_enabled.changed or avahi_options_disabled.changed
