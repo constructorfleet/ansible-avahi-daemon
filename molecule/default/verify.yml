@@ -19,5 +19,5 @@
         - avahi-daemon.service
       loop_control:
         loop_var: service
-        labe: "{{ service }}"
+        label: "{{ service }}"
 
