@@ -4,6 +4,14 @@
 - name: Verify
   hosts: all
   tasks:
-    - name: Example assertion
+    - name: Get Systemd status of avahi-service
+      ansible.builtin.service_facts:
+      register: service_facts
+
+    - name: Assert service is running
       ansible.builtin.assert:
-        that: true
+        that:
+          - "{{ service_facts.ansible_facts['avahi-daemon.service'].state == "started" }}"
+        success_msg: "Service avahi-daemon is started"
+        fail_msg: "Service avahi-daemon is not started: {{ service_facts | to_nice_yaml }}"
+
