@@ -1,12 +1,12 @@
 ---
 
 - name: Install packages
-  package:
+  ansible.builtin.package:
     name: '{{ avahi_packages }}'
     state: present
 
 - name: Enable options
-  replace:
+  ansible.builtin.replace:
     path: '{{ avahi_conf_path }}'
     regexp: '^#?{{ item }}=(?:yes|no)$'
     replace: '{{ item }}=yes'
@@ -14,7 +14,7 @@
   register: avahi_options_enabled
 
 - name: Disable options
-  replace:
+  ansible.builtin.replace:
     path: '{{ avahi_conf_path }}'
     regexp: '^#?{{ item }}=(?:yes|no)$'
     replace: '{{ item }}=no'
@@ -22,7 +22,8 @@
   register: avahi_options_disabled
 
 - name: Restart avahi-daemon if config changes
-  systemd:
+  ansible.builtin.systemd:
     name: avahi-daemon
     state: restarted
+    daemon_reload: true
   when: avahi_options_enabled.changed or avahi_options_disabled.changed
