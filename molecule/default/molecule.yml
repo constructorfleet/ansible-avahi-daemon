@@ -4,10 +4,11 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: ansible-role-ubuntu-20.04
-    dockerfile: Dockerfile.j2
-    image: jrei/systemd-ubuntu:focal
+  - name: ubuntu-20.04
+    image: joepublic/molecule-ubuntu:20.04
     privileged: true
+    capabilities:
+      - SYS_ADMIN
     tmpfs:
       - /tmp
       - /run
