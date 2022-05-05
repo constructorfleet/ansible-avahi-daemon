@@ -26,4 +26,5 @@
     name: avahi-daemon
     state: restarted
     daemon_reload: true
+    enabled: yes
   when: avahi_options_enabled.changed or avahi_options_disabled.changed
