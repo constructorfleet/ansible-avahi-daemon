@@ -6,7 +6,7 @@ driver:
 platforms:
   - name: ansible-role-ubuntu-20.04
     dockerfile: Dockerfile.j2
-    image: ubuntu:focal
+    image: jrei/systemd-ubuntu:focal
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
