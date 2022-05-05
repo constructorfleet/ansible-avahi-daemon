@@ -8,6 +8,8 @@ platforms:
     dockerfile: Dockerfile.j2
     image: ubuntu:focal
     privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
 provisioner:
   name: ansible
   options:

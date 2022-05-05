@@ -2,6 +2,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: Install MaaS
+    - name: Run avahi daemon role
       ansible.builtin.include_role:
         name: ansible-avahi-daemon
